@@ -13,26 +13,11 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SocioNote"),
         centerTitle: true,
+        title: Text("SocioHood"),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: "Add New Note",
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AddNote()));
-        },
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [],
-        ),
       ),
     );
   }
