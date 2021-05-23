@@ -32,6 +32,7 @@ class _SignupState extends State<Signup> {
       });
       String email = user.email;
       Helper.saveUserloggedInSharedPreference(userLoggedIn);
+
       Helper.saveUsernameSharedPreference(email);
       Helper.saveUserImageSharedPreference(user.photoURL);
       await DataBase().addUser(email);
@@ -64,13 +65,35 @@ class _SignupState extends State<Signup> {
                 "socioNote",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
-              MaterialButton(
-                color: Colors.teal[100],
-                elevation: 10,
-                child: Text("Google Sign up"),
-                onPressed: () {
-                  signup();
-                },
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MaterialButton(
+                  color: Colors.teal[100],
+                  elevation: 10,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 30.0,
+                        width: 30.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/googleimage.png'),
+                              fit: BoxFit.cover),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text("Sign In with Google")
+                    ],
+                  ),
+                  onPressed: () {
+                    signup();
+                  },
+                ),
               )
             ],
           ),

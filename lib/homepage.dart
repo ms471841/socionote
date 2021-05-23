@@ -26,7 +26,7 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
 
   Future<void> getUserNote() async {
     String userName = await Helper.getUsernameSharedPreference();
-
+    print(userName);
     await DataBase().getNotes(userName).then(
       (value) {
         setState(() {
@@ -113,10 +113,7 @@ class NoteTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          title: Text(title),
-          leading: Icon(Icons.people),
-        ),
+        Text(title),
       ],
     );
   }

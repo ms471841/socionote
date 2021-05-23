@@ -13,20 +13,21 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool islogin;
-  Future getLoggedInState() async {
+  getLoggedInState() async {
     await Helper.getUserLoggedInSharedPreference().then((value) {
       setState(() {
         islogin = value;
+        print(islogin);
       });
     });
   }
 
   @override
   void initState() {
-    getLoggedInState();
     super.initState();
+    getLoggedInState();
     Timer(
-      Duration(milliseconds: 3),
+      Duration(seconds: 3),
       () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
