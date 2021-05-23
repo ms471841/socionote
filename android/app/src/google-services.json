@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "912903406420",
+    "project_id": "socionote-1f997",
+    "storage_bucket": "socionote-1f997.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912903406420:android:24a4fa4cf9d5613224fec1",
+        "android_client_info": {
+          "package_name": "com.example.socionote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912903406420-2j38j5rmpk9j1f1jqp5g7sga0a9fqdk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socionote",
+            "certificate_hash": "ebf69f76ea39f649ee35d225b33b172b3ec291e0"
+          }
+        },
+        {
+          "client_id": "912903406420-a4nr0v2lleksg23h11j23tdj8rcq284g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjkoM-atgoz3dJD1jPXmLwadfHCLDe80A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912903406420-a4nr0v2lleksg23h11j23tdj8rcq284g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
