@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:socionote/addNote.dart';
 import 'package:socionote/database.dart';
+import 'package:socionote/profileUI.dart';
 import 'package:socionote/service.dart';
 import 'package:socionote/sharedpre.dart';
+import 'package:socionote/shownote.dart';
 import 'package:socionote/signup.dart';
 
 class SocioNoteHome extends StatefulWidget {
@@ -15,7 +18,7 @@ class SocioNoteHome extends StatefulWidget {
 
 class _SocioNoteHomeState extends State<SocioNoteHome> {
   Stream<QuerySnapshot> notestream;
-  String image;
+  String image, email;
 
   Future<void> userSignOut() async {
     await Service().signout();
@@ -47,6 +50,8 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
                 itemBuilder: (context, index) {
                   return NoteTile(
                     title: snapshot.data.docs[index].data()["title"],
+                    description:
+                        snapshot.data.docs[index].data()["Description"],
                   );
                 },
               )
@@ -61,6 +66,7 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
 
   getuserImage() async {
     image = await Helper.getUserImageSharedPreference();
+    email = await Helper.getUsernameSharedPreference();
   }
 
   @override
@@ -85,10 +91,34 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
             ),
           ),
         ],
-        leading: Container(
-          child: ClipRRect(
-              //     child: image != null ? NetworkImage(image) : Icon(Icons.ac_unit),
-              ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfileUI(
+                          userImage: image,
+                          userEmail: email,
+                        )));
+          },
+          child: Container(
+            margin: EdgeInsets.only(left: 12, top: 6, bottom: 6),
+            decoration: BoxDecoration(
+              border: Border.all(),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Hero(
+              tag: 'image',
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: image != null
+                      ? Image.network(
+                          image,
+                          fit: BoxFit.fill,
+                        )
+                      : Icon(Icons.people)),
+            ),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -98,23 +128,39 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
         },
         child: Icon(Icons.add),
       ),
-      body: SingleChildScrollView(
-        child: noteList(),
-      ),
+      body: noteList(),
     );
   }
 }
 
 class NoteTile extends StatelessWidget {
   final String title;
-  NoteTile({Key key, @required this.title}) : super(key: key);
+  final String description;
+  NoteTile({Key key, @required this.title, @required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(title),
-      ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListTile(
+          title: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+          ),
+          subtitle: Text(
+            description,
+            overflow: TextOverflow.ellipsis,
+          ),
+          enabled: true,
+          tileColor: Colors.blueAccent,
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => ShowNote()));
+          },
+        ),
+      ),
     );
   }
 }

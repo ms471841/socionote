@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:socionote/homepage.dart';
 import 'package:socionote/sharedpre.dart';
+import 'package:socionote/shownote.dart';
 import 'package:socionote/signup.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,11 +14,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool islogin;
-  getLoggedInState() async {
+
+  Future getLoggedInState() async {
     await Helper.getUserLoggedInSharedPreference().then((value) {
       setState(() {
         islogin = value;
-        print(islogin);
       });
     });
   }
@@ -27,53 +28,72 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     getLoggedInState();
     Timer(
-      Duration(seconds: 3),
+      Duration(seconds: 5),
       () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => islogin != null
-                  ? islogin
-                      ? SocioNoteHome()
-                      : Signup()
-                  : Signup())),
+        context,
+        MaterialPageRoute(
+            builder: (context) => islogin != null
+                ? islogin
+                    ? SocioNoteHome()
+                    : Signup()
+                : Signup()),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [Colors.red, Colors.blue])),
-          ),
-          Column(
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [Colors.red, Colors.blueAccent])),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 220),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlutterLogo(
-                size: 100,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Image.asset(
+                    "assets/images/notepad.png",
+                    width: 120,
+                    height: 120,
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
                   Text(
                     "SocioNote",
-                    style: TextStyle(fontSize: 30, fontFamily: "cursive"),
+                    style: TextStyle(
+                        fontSize: 45,
+                        fontFamily: "cursive",
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Life is too fast don't forget anything ",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  Text(
+                    "just Note it!",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  CircularProgressIndicator(),
+                  SizedBox(height: 100),
+                  Text("By"),
+                  Text("Your Developer"),
                 ],
-              ),
-              SizedBox(
-                height: 50,
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

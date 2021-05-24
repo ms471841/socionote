@@ -14,30 +14,27 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  bool userLoggedIn = false;
-  Future<void> signup() async {
+
+  Future<void> signup(BuildContext context) async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-    final AuthCredential authCredential = GoogleAuthProvider.credential(
-        idToken: googleSignInAuthentication.idToken,
-        accessToken: googleSignInAuthentication.accessToken);
-    UserCredential result = await auth.signInWithCredential(authCredential);
-    User user = result.user;
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      User user = result.user;
 
-    if (result != null) {
-      setState(() {
-        userLoggedIn = true;
-      });
-      String email = user.email;
-      Helper.saveUserloggedInSharedPreference(userLoggedIn);
-
-      Helper.saveUsernameSharedPreference(email);
-      Helper.saveUserImageSharedPreference(user.photoURL);
-      await DataBase().addUser(email);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => SocioNoteHome()));
+      if (result != null) {
+        await Helper.saveUserloggedInSharedPreference(true);
+        await Helper.saveUsernameSharedPreference(user.email);
+        await Helper.saveUserImageSharedPreference(user.photoURL);
+        await DataBase().addUser(user.email);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SocioNoteHome()));
+      }
     }
   }
 
@@ -91,7 +88,7 @@ class _SignupState extends State<Signup> {
                     ],
                   ),
                   onPressed: () {
-                    signup();
+                    signup(context);
                   },
                 ),
               )

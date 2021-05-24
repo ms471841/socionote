@@ -17,9 +17,10 @@ class _AddNoteState extends State<AddNote> {
   TextEditingController bodycontroller = TextEditingController();
 
   Future<void> saveNote() async {
-    Map<String, String> userNote = {
+    Map<String, dynamic> userNote = {
       "title": titlecontroller.text,
       "Description": bodycontroller.text,
+      "time": dateTime.millisecondsSinceEpoch,
     };
 
     String email = await Helper.getUsernameSharedPreference();
@@ -38,6 +39,7 @@ class _AddNoteState extends State<AddNote> {
         ),
         actions: [
           IconButton(
+            tooltip: "save note",
             icon: Icon(Icons.save),
             onPressed: () {
               saveNote();
@@ -45,40 +47,45 @@ class _AddNoteState extends State<AddNote> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              timeOfDay.format(context),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  timeOfDay.format(context),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: titlecontroller,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  decoration: InputDecoration(
+                      hintText: "Title",
+                      border: OutlineInputBorder(),
+                      labelText: "Title"),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: bodycontroller,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: "Type something....",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            TextField(
-              controller: titlecontroller,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: InputDecoration(
-                hintText: "Title",
-                enabledBorder: InputBorder.none,
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: bodycontroller,
-              keyboardType: TextInputType.multiline,
-              style: TextStyle(
-                fontSize: 18,
-              ),
-              decoration: InputDecoration(
-                hintText: "Type something....",
-                enabledBorder: InputBorder.none,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

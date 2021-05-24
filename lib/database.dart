@@ -7,7 +7,6 @@ class DataBase {
         .doc(userName)
         .collection("notes")
         .add(userNote);
-    print("done");
   }
 
   Future<void> addUser(userName) async {
@@ -15,11 +14,12 @@ class DataBase {
   }
 
   Future getNotes(userName) async {
+    print(userName);
     return FirebaseFirestore.instance
         .collection("users")
         .doc(userName)
         .collection("notes")
-        .orderBy('time')
+        .orderBy('time', descending: false)
         .snapshots();
   }
 }
