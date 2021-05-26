@@ -22,4 +22,29 @@ class DataBase {
         .orderBy('time', descending: false)
         .snapshots();
   }
+
+  Future getUserDetail(userName) async {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(userName)
+        .collection("userdetail")
+        .get();
+  }
+
+  Future<void> addSuggestion(userSuggestion, userName) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userName)
+        .collection("suggestions")
+        .add(userSuggestion);
+  }
+
+  Future<void> deleteNote(userName, title, userNoteId) async {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(userName)
+        .collection("notes")
+        .doc(userNoteId)
+        .delete();
+  }
 }

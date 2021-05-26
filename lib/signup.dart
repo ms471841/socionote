@@ -26,12 +26,20 @@ class _SignupState extends State<Signup> {
           accessToken: googleSignInAuthentication.accessToken);
       UserCredential result = await auth.signInWithCredential(authCredential);
       User user = result.user;
-
+      // Map<String, dynamic> userDetail = {
+      //   "email": user.email,
+      //   "name": user.displayName,
+      //   "phone number": user.phoneNumber,
+      //   "photoUrl": user.photoURL,
+      // };
       if (result != null) {
         await Helper.saveUserloggedInSharedPreference(true);
         await Helper.saveUsernameSharedPreference(user.email);
         await Helper.saveUserImageSharedPreference(user.photoURL);
+        //   await Helper.saveUserNoteIdSharedPreference(0);
+
         await DataBase().addUser(user.email);
+        // await DataBase().addUserDetail(user.email, userDetail);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => SocioNoteHome()));
       }

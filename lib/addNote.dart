@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:socionote/database.dart';
 import 'package:socionote/homepage.dart';
 import 'package:socionote/sharedpre.dart';
+import 'package:socionote/userName.dart';
 
 class AddNote extends StatefulWidget {
   AddNote({Key key}) : super(key: key);
@@ -22,8 +23,10 @@ class _AddNoteState extends State<AddNote> {
       "Description": bodycontroller.text,
       "time": dateTime.millisecondsSinceEpoch,
     };
-
     String email = await Helper.getUsernameSharedPreference();
+    // int userId = await Helper.getUserNoteIdSharedPreference();
+
+    //await Helper.saveUserNoteIdSharedPreference(userId++);
     await DataBase().saveUserNote(userNote, email);
     Navigator.pop(
         context, MaterialPageRoute(builder: (context) => SocioNoteHome()));

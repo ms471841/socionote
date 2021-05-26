@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:socionote/homepage.dart';
 import 'package:socionote/sharedpre.dart';
-import 'package:socionote/shownote.dart';
 import 'package:socionote/signup.dart';
 
 class SplashScreen extends StatefulWidget {

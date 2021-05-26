@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:socionote/addNote.dart';
 import 'package:socionote/database.dart';
@@ -29,7 +30,7 @@ class _SocioNoteHomeState extends State<SocioNoteHome> {
 
   Future<void> getUserNote() async {
     String userName = await Helper.getUsernameSharedPreference();
-    print(userName);
+
     await DataBase().getNotes(userName).then(
       (value) {
         setState(() {
@@ -154,10 +155,16 @@ class NoteTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           enabled: true,
-          tileColor: Colors.blueAccent,
+          tileColor:
+              Colors.primaries[Random().nextInt(Colors.primaries.length)],
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ShowNote()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ShowNote(
+                          title: title,
+                          note: description,
+                        )));
           },
         ),
       ),

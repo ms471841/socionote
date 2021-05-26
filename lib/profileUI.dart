@@ -1,4 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:socionote/database.dart';
 import 'package:toast/toast.dart';
@@ -29,7 +30,7 @@ class _ProfileUIState extends State<ProfileUI> {
       Map<String, String> userSuggestion = {
         "suggestion": suggestioneditingcontroller.text,
       };
-      // await dataBase.addSuggestion(, userSuggestion);
+      await dataBase.addSuggestion(userSuggestion, widget.userEmail);
       setState(() {
         suggestioneditingcontroller.text = "";
       });
@@ -46,7 +47,8 @@ class _ProfileUIState extends State<ProfileUI> {
               children: [
                 Ink(
                   height: 250,
-                  color: Colors.cyan,
+                  color: Colors
+                      .primaries[Random().nextInt(Colors.primaries.length)],
                 ),
                 Container(
                   width: double.infinity,
