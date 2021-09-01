@@ -5,6 +5,20 @@ A new Flutter project.
 ## Getting Started
 
 This is the note app where i use the google authentication and firebase to store the notes . 
+This is the well performance flutter Application , where we can write notes.
+
+features :
+
+1. Google authentication
+2. Sign In / Sign Out
+3. Add note
+4. Delete note
+5. cloud firestore as a database
+6. User profile page
+7. Uses hero tag
+8. Random color of the application which makes it beautiful.
+9. Beautiful splash screen.
+10. Made with flutter
 
 
 
